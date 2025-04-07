@@ -1,0 +1,54 @@
+<div class="app-container">
+  <nav class="sidebar">
+    <img src="assets/COFICAB_Powered-by-passion-300x84.jpg" class="company-logo">
+    <div class="logo">CMES App</div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/alternativbom" routerLinkActive="active">
+          <i class="fas fa-exchange-alt"></i>
+          <span>Alternative BOM</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/bom" routerLinkActive="active">
+          <i class="fas fa-list-alt"></i>
+          <span>BOM</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/material" routerLinkActive="active">
+          <i class="fas fa-cubes"></i>
+          <span>Material</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/product-order" routerLinkActive="active">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Product Order</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/product-version" routerLinkActive="active">
+          <i class="fas fa-code-branch"></i>
+          <span>Product Version</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/routing" routerLinkActive="active">
+          <i class="fas fa-route"></i>
+          <span>Routing</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/work-centre" routerLinkActive="active">
+          <i class="fas fa-industry"></i>
+          <span>Work Centre</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
