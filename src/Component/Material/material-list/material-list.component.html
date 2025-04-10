@@ -1,0 +1,9 @@
+<table>
+    <tr *ngFor="let material of materials">
+      <td>{{ material.materialNumber }}</td>
+      <td>{{ material.materialDescription }}</td>
+      <td>{{ material.baseUnitOfMeasure }}</td>
+      <td><button (click)="edit(material)">Edit</button></td>
+    </tr>
+  </table>
+  
