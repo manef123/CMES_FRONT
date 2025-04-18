@@ -1,7 +1,11 @@
 <form (ngSubmit)="onSubmit()" #materialForm="ngForm">
-    <input type="text" name="materialNumber" [(ngModel)]="material.materialNumber" placeholder="Material Number" required />
-    <input type="text" name="description" [(ngModel)]="material.materialDescription" placeholder="Description" required />
-    <input type="text" name="baseUnitOfMeasure" [(ngModel)]="material.baseUnitOfMeasure" placeholder="Base Unit" required />
-    <button type="submit">{{ material.id ? 'Update' : 'Add' }} Material</button>
-  </form>
-  
+  <input type="text" name="materialNumber" [(ngModel)]="material.materialNumber" placeholder="Material Number" required />
+
+  <input type="text" name="description" [(ngModel)]="material.materialDescription" placeholder="Material Description" required />
+
+  <input type="text" name="baseUnitOfMeasure" [(ngModel)]="material.baseUnitOfMeasure" placeholder="Base Unit of Measure" required />
+
+  <button type="submit">
+    {{ material.id ? 'Update' : 'Add' }} Material
+  </button>
+</form>

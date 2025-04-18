@@ -1,9 +1,108 @@
-<table>
-    <tr *ngFor="let material of materials">
-      <td>{{ material.materialNumber }}</td>
-      <td>{{ material.materialDescription }}</td>
-      <td>{{ material.baseUnitOfMeasure }}</td>
-      <td><button (click)="edit(material)">Edit</button></td>
-    </tr>
-  </table>
-  
+<div class="material-container">
+  <!-- Liste des matériaux -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📦 Material List</h2></summary>
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>Material Number</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Base UoM</th>
+            <th>Group</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let material of materials" (click)="onSelect(material)"
+              [class.selected-row]="material.materialNumber === selectedMaterial.materialNumber">
+            <td>{{ material.materialNumber }}</td>
+            <td>{{ material.description }}</td>
+            <td>{{ material.materialType }}</td>
+            <td>{{ material.baseUnitOfMeasure }}</td>
+            <td>{{ material.materialGroup }}</td>
+            <td>{{ material.standardPrice }} TND</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <!-- Séparateur -->
+  <div class="section-divider"></div>
+
+  <!-- Onglets -->
+  <div class="tabs">
+    <div class="tab-titles">
+      <div *ngFor="let tab of tabs; let i = index"
+           class="tab-title"
+           [class.active]="selectedTab === i"
+           (click)="selectTab(i)">
+        {{ tab.title }}
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Onglet 1 : Formulaire -->
+      <div *ngIf="selectedTab === 0" class="tab-panel">
+        <h3>✏️ {{selectedMaterial.materialNumber ? 'Edit' : 'Add'}} Material</h3>
+        <form (ngSubmit)="onSubmit($event)" class="material-form">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Material Number</label>
+              <input type="text" [(ngModel)]="selectedMaterial.materialNumber" name="materialNumber" required>
+            </div>
+            <div class="form-row">
+              <label>Material Name</label>
+              <input type="text" [(ngModel)]="selectedMaterial.description" name="description" required>
+            </div>
+            <div class="form-row">
+              <label>Material Type</label>
+              <select [(ngModel)]="selectedMaterial.materialType" name="materialType" required>
+                <option value="RAW">Raw</option>
+                <option value="FIN">Finished</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Base Unit of Measure</label>
+              <input type="text" [(ngModel)]="selectedMaterial.baseUnitOfMeasure" name="baseUnitOfMeasure">
+            </div>
+            <div class="form-row">
+              <label>Material Group</label>
+              <input type="text" [(ngModel)]="selectedMaterial.materialGroup" name="materialGroup">
+            </div>
+            <div class="form-row">
+              <label>Price (TND)</label>
+              <input type="number" [(ngModel)]="selectedMaterial.standardPrice" name="standardPrice" step="0.01">
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">
+              💾 {{selectedMaterial.materialNumber ? 'Update' : 'Save'}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Onglet 2 -->
+      <div *ngIf="selectedTab === 1" class="tab-panel">
+        <h3>📋 onglet 2</h3>
+        <p>Contenu à ajouter...</p>
+      </div>
+
+      <!-- Onglet 3 -->
+      <div *ngIf="selectedTab === 2" class="tab-panel">
+        <h3>📊 onglet 3</h3>
+        <p>Contenu à ajouter...</p>
+      </div>
+
+      <!-- Onglet 4 -->
+      <div *ngIf="selectedTab === 3" class="tab-panel">
+        <h3>📈 onglet 4</h3>
+        <p>Contenu à ajouter...</p>
+      </div>
+    </div>
+  </div>
+</div>
