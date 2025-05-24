@@ -1,15 +1,17 @@
 import { DataType } from "./DataType";
 
 export interface Characteristic {
+    id: number;
     characteristicNumber: string;
     characteristicName: string;
     dataType: DataType;
-    characteristic_description: string;
+    characteristicDescription: string;
+    valueRange: string;
     defaultValue: string;
-    unit_of_measure: string;
+    unitOfMeasure: string;
     isRequired: boolean;
     isSingleValue: boolean;
-    characteristic_group: string;
+    CharacteristicGroup: string;
     ValidityStartDate: Date; 
     ValidityEndDate: Date; 
   }

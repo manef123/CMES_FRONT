@@ -1,0 +1,147 @@
+<div class="production-version-container">
+
+  <!-- Liste des Product Orders -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📦 Product Order List</h2></summary>
+      <button (click)="initNewProductOrder()" class="submit-btn">➕ New Product Order</button>
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Order Description</th>
+            <th>Planned Quantity</th>
+            <th>Actual Quantity</th>
+            <th>Unit of Measure</th>
+            <th>Material Number</th>
+            <th>Order Date</th>
+            <th>Production Version Code</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let po of productOrders">
+            <td>{{ po.orderNumber }}</td>
+            <td>{{ po.orderDescription }}</td>
+            <td>{{ po.plannedQuantity }}</td>
+            <td>{{ po.actualQuantity }}</td>
+            <td>{{ po.unitOfMeasure }}</td>
+            <td>{{ po.materialNumber }}</td>
+            <td>{{ po.orderDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ po.productionVersionCode }}</td>
+            <td>{{ po.startDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ po.endDate | date:'yyyy-MM-dd' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Onglets -->
+  <div class="tabs tab-titles">
+    <button
+      (click)="activeTab = 0"
+      [class.active]="activeTab === 0"
+      class="tab-title"
+    >
+      Order Form
+    </button>
+    <button
+      (click)="activeTab = 1"
+      [class.active]="activeTab === 1"
+      class="tab-title"
+    >
+      Onglet 2
+    </button>
+  </div>
+
+  <div class="tab-content">
+    <div *ngIf="activeTab === 0">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="material-form">
+
+        <div class="form-grid">
+
+          <div class="form-row">
+            <label>Order Number</label>
+            <input formControlName="orderNumber" type="text" />
+          </div>
+
+          <div class="form-row">
+            <label>Order Description</label>
+            <input formControlName="orderDescription" type="text" />
+          </div>
+
+          <div class="form-row">
+            <label>Planned Quantity</label>
+            <input formControlName="plannedQuantity" type="number" />
+          </div>
+
+          <div class="form-row">
+            <label>Actual Quantity</label>
+            <input formControlName="actualQuantity" type="number" />
+          </div>
+
+          <div class="form-row">
+            <label>Unit of Measure</label>
+            <input formControlName="unitOfMeasure" type="text" />
+          </div>
+
+          <!--<div class="form-row">
+            <label>Material Number</label>
+            <input formControlName="materialNumber" type="text" />
+          </div>-->
+
+          <div class="form-row">
+            <label>Order Date</label>
+            <input formControlName="ordertDate" type="date" />
+          </div>
+
+          <!--<div class="form-row">
+            <label>Production Version Code</label>
+            <input formControlName="productionVersionCode" type="text" />
+          </div>-->
+
+          <div class="form-row">
+            <label>Start Date</label>
+            <input formControlName="startDate" type="date" />
+          </div>
+
+          <div class="form-row">
+            <label>End Date</label>
+            <input formControlName="endDate" type="date" />
+          </div>
+
+          <!-- Relations avec entités Material et ProductionVersion -->
+          <div class="form-row">
+            <label for="material">Material</label>
+            <select id="material" formControlName="MaterialId">
+              <option *ngFor="let mat of materials" [ngValue]="mat.id">
+                {{ mat.materialNumber }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="productionVersion">Production Version</label>
+            <select id="productionVersion" formControlName="ProductionVersionId">
+              <option *ngFor="let pv of productVersions" [ngValue]="pv.id">
+                {{ pv.versionCode }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">Save</button>
+            <button type="button" class="delete-btn" (click)="form.reset()">Cancel</button>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -5,7 +5,7 @@ import { MaterialListComponent } from '../Component/Material/material-list/mater
 import { MaterialFormComponent } from '../Component/Material/material-form/material-form.component';
 
 // BOM
-import { BomListComponent } from '../Component/BOM/bom-list/bom-list.component';
+import { BOMListComponent } from '../Component/BOM/bom-list/bom-list.component';
 import { BomFormComponent } from '../Component/BOM/bom-form/bom-form.component';
 
 // Routing
@@ -15,6 +15,14 @@ import { RoutingFormComponent } from '../Component/Routing/routing-form/routing-
 // Work Centre
 import { WorkCenterListComponent } from '../Component/WorkCenter/work-center-list/work-center-list.component';
 import { WorkCenterFormComponent } from '../Component/WorkCenter/work-center-form/work-center-form.component';
+import { AlternativeBomComponent } from '../Component/alternative-bom/alternative-bom.component';
+import { ClassificationComponent } from '../Component/classification/classification.component';
+
+import { CharacteristicComponent } from '../Component/characteristic/characteristic.component';
+
+import { ProductionVersionComponent } from '../Component/production-version/production-version.component';
+import { ProductOrderComponent } from '../Component/product-order/product-order.component';
+
 
 export const AppRoutes: Routes = [
   // Redirections vers les pages de liste par défaut
@@ -22,13 +30,17 @@ export const AppRoutes: Routes = [
   { path: 'bom', redirectTo: 'bom/list', pathMatch: 'full' },
   { path: 'routing', redirectTo: 'routing/list', pathMatch: 'full' },
   { path: 'work-centre', redirectTo: 'work-centre/list', pathMatch: 'full' },
+  { path: 'alternative-bom', redirectTo: 'alternative-bom', pathMatch: 'full' },
+  { path: 'classification', redirectTo: 'classification', pathMatch: 'full' },
+  { path: 'product-version', redirectTo: 'product-version', pathMatch: 'full' },
+   { path: 'product-order', redirectTo: 'product-order', pathMatch: 'full' },
 
   // Material
   { path: 'material/list', component: MaterialListComponent },
   { path: 'material/form', component: MaterialFormComponent },
 
   // BOM
-  { path: 'bom/list', component: BomListComponent },
+  { path: 'bom/list', component: BOMListComponent },
   { path: 'bom/form', component: BomFormComponent },
 
   // Routing
@@ -38,6 +50,21 @@ export const AppRoutes: Routes = [
   // Work Centre
   { path: 'work-centre/list', component: WorkCenterListComponent },
   { path: 'work-centre/form', component: WorkCenterFormComponent },
+
+  //alternatibe bom
+  { path: 'alternative-bom', component: AlternativeBomComponent },
+
+  //classification
+  { path: 'classification', component: ClassificationComponent },
+  
+  //characteristic
+  { path: 'characteristic', component: CharacteristicComponent },
+
+  //production version
+   { path: 'product-version', component: ProductionVersionComponent },
+  
+   //product-order
+   { path: 'product-order', component: ProductOrderComponent },
 
   // Redirection par défaut
   { path: '', redirectTo: 'material/list', pathMatch: 'full' }

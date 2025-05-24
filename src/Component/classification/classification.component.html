@@ -1,0 +1,132 @@
+<div class="classification-container">
+    <!-- Liste des classifications -->
+    <div class="list-section">
+      <details open>
+        <summary><h2>📊 Classification List</h2></summary>
+        <button (click)="initNewClassification()" class="submit-btn">➕ New Classification</button>
+        <table class="material-table">
+          <thead>
+            <tr>
+              <th>Classification Name</th>
+              <th>Class Authorization Group</th>
+              <th>Class Group</th>
+              <th>Class Hierarchy</th>
+              <th>Class Number</th>
+              <th>Class Usage</th>
+              <th>Description</th>
+              <th>Validity Start Date</th>
+              <th>Validity End Date</th>
+             <!-- <th>Status</th>-->
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let classification of classifications"
+                (click)="onEdit(classification)"
+                [class.selected-row]="selectedClassification?.id === classification.id">
+                <td>{{ classification.className }}</td> 
+                <td>{{ classification.classAuthorizationGroup }}</td> 
+                <td>{{ classification.classGroup }}</td> 
+                <td>{{ classification.classHierarchy }}</td> 
+                <td>{{ classification.classNumber }}</td> 
+                <td>{{ classification.classUsage }}</td> 
+              <td>{{ classification.classDescription }}</td> 
+              <td>{{ classification.validityStartDate | date }}</td>
+              <td>{{ classification.validityEndDate | date }}</td>
+
+              <td>
+                <button (click)="onDelete(classification.id)">❌ Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+  
+    <div class="section-divider"></div>
+  
+    <!-- Formulaire -->
+    <div *ngIf="selectedClassification || !isEditMode" class="tabs">
+      <div class="tab-titles">
+        <div class="tab-title" [class.active]="activeTab === 0" (click)="activeTab = 0">
+          ✏️ Classification Details
+        </div>
+        <div class="tab-title" [class.active]="activeTab === 1" (click)="activeTab = 1">
+          🛠 Classification Operations
+        </div>
+      </div>
+  
+      <div class="tab-content">
+        <div *ngIf="activeTab === 0" class="tab-panel">
+          <!-- Formulaire -->
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="material-form">
+            <div class="form-grid">
+              <div class="form-row">
+                <label>Name</label>
+                <input formControlName="className" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Class Authorization Group</label>
+                <input formControlName="classAuthorizationGroup" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Class Group</label>
+                <input formControlName="classGroup" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Class Hierarchy</label>
+                <input formControlName="classHierarchy" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Class Number</label>
+                <input formControlName="classNumber" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Class Usage</label>
+                <input formControlName="classUsage" type="text" /> 
+              </div>
+
+              <div class="form-row">
+                <label>Description</label>
+                <input formControlName="classDescription" type="text" /> 
+              </div>
+  
+              <div class="form-row">
+                <label>Validity Start Date</label>
+                <input formControlName="validityStartDate" type="date" />
+              </div>
+  
+              <div class="form-row">
+                <label>Validity End Date</label>
+                <input formControlName="validityEndDate" type="date" />
+              </div>
+  
+              <div class="form-row">
+                <label>Is inherited</label>
+                <input formControlName="isInherited" type="checkbox" />
+              </div>
+  
+              <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                  {{ isEditMode ? 'Update' : 'Save' }}
+                </button>
+                <button type="button" class="delete-btn" (click)="initNewClassification()">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+  
+        <!-- Onglet Operations -->
+        <div *ngIf="activeTab === 1" class="tab-panel">
+          <h3>Classification Operations</h3>
+          <!-- Implémenter la gestion des opérations de Classification ici -->
+        </div>
+      </div>
+    </div>
+  </div>
+  

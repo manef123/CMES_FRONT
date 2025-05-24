@@ -1,6 +1,7 @@
 import { WorkCenterType } from "./WorkCenterType";
 
 export interface WorkCenter {
+    id:number;
     workCenterNumber: string;
     workCenterType: WorkCenterType;
     description: string;

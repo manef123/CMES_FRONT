@@ -1,3 +1,4 @@
+/* === Global Styles === */
 .app-container {
   display: flex;
   min-height: 100vh;
@@ -13,7 +14,12 @@
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Permet à la sidebar de défiler si le contenu est trop grand */
 }
 
 .company-logo {
@@ -36,8 +42,11 @@
 
 .nav-links li {
   margin: 15px 0;
+  position: relative;
+  transition: transform 0.3s ease; /* Transition pour déplacer les éléments en dessous */
 }
 
+/* === Main Navigation Links === */
 .nav-links a {
   text-decoration: none;
   color: #ecf0f1;
@@ -58,10 +67,60 @@
   margin-right: 10px;
 }
 
+/* === Sous-menus === */
+.sub-menu {
+  display: none; /* Cacher les sous-menus par défaut */
+  position: absolute;
+  top: 100%; /* Placer le sous-menu juste sous le bouton */
+  left: 0;
+  background-color: #34495e;
+  list-style-type: none;
+  padding: 0;
+  width: 100%; /* Prendre toute la largeur du parent */
+  z-index: 10;
+}
+
+.sub-menu li a {
+  padding: 10px 20px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #ecf0f1;
+  transition: background 0.3s ease;
+}
+
+.sub-menu li a:hover {
+  background-color: #555;
+}
+
+/* === Affichage du sous-menu lorsque le bouton est survolé === */
+.nav-item:hover .sub-menu {
+  display: block;
+  animation: slideDown 0.3s ease-in-out; /* Animation pour faire glisser le sous-menu */
+}
+
+/* === Déplacement des éléments en dessous du bouton survolé === */
+.nav-item:hover ~ .nav-item {
+  transform: translateY(40px); /* Déplacer tous les boutons sous le bouton survolé vers le bas */
+  transition: transform 0.3s ease-out;
+}
+
+/* === Animation de descente du sous-menu === */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* === Main Content === */
 .main-content {
   flex: 1;
   padding: 20px;
+  margin-left: 240px; /* Pour laisser de la place à la sidebar */
   overflow-y: auto;
 }
 

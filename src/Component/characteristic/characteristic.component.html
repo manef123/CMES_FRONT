@@ -1,0 +1,136 @@
+<div class="characteristic-container">
+    <!-- Liste des Characteristics -->
+    <div class="list-section">
+      <details open>
+        <summary><h2>🔧 Characteristic List</h2></summary>
+        <button (click)="initNewCharacteristic()" class="submit-btn">➕ New Characteristic</button>
+        <table class="material-table">
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Data Type</th>
+              <th>Unit</th>
+              
+              <th>Is Required</th>
+              <th>Is Single</th>
+              <th>Group</th>
+              <th>start Date</th>
+              <th>End Date </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let char of characteristics"
+                (click)="edit(char)"
+                [class.selected-row]="selectedCharacteristic?.id === char.id">
+              <td>{{ char.characteristicNumber }}</td>
+              <td>{{ char.characteristicName }}</td>
+              <td>{{ char.characteristicDescription }}</td>
+              <td>{{ char.dataType }}</td>
+              <td>{{ char.unitOfMeasure }}</td>
+             <!-- <td>{{ char.defaultValue }}</td>-->
+              <td>{{ char.isRequired ? 'Yes' : 'No' }}</td>
+              <td>{{ char.isSingleValue ? 'Yes' : 'No' }}</td>
+              <td>{{ char.CharacteristicGroup }}</td>
+              <td>{{ char.ValidityStartDate }}</td>
+              <td>{{ char.ValidityEndDate }}</td>
+              <td>
+                <button (click)="delete(char.id); $event.stopPropagation()">❌ Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+  
+    <div class="section-divider"></div>
+  
+    <!-- Formulaire -->
+    <div *ngIf="selectedCharacteristic || !isEditMode" class="tabs">
+      <div class="tab-titles">
+        <div class="tab-title active">📝 Characteristic Details</div>
+      </div>
+  
+      <div class="tab-content">
+        <div class="tab-panel">
+          <form [formGroup]="form" (ngSubmit)="submit()" class="material-form">
+            <div class="form-grid">
+  
+              <div class="form-row">
+                <label>Number</label>
+                <input formControlName="characteristicNumber" type="text" />
+              </div>
+  
+              <div class="form-row">
+                <label>Name</label>
+                <input formControlName="characteristicName" type="text" />
+              </div>
+  
+              <div class="form-row">
+                <label>Description</label>
+                <input formControlName="characteristicDescription" type="text" />
+              </div>
+  
+              <div class="form-row">
+                <label>Data Type</label>
+                <select formControlName="dataType">
+                  <option *ngFor="let type of dataTypes" [value]="type">{{ type }}</option>
+                </select>
+              </div>
+  
+              <div class="form-row">
+                <label>Value Range</label>
+                <input formControlName="valueRange" type="text" />
+              </div>
+  
+              <!--<div class="form-row">
+                <label>Default Value</label>
+                <input formControlName="defaultValue" type="text" />
+              </div>-->
+  
+              <div class="form-row">
+                <label>Unit of Measure</label>
+                <input formControlName="unitOfMeasure" type="text" />
+              </div>
+  
+              <div class="form-row">
+                <label>Group</label>
+                <input formControlName="CharacteristicGroup" type="text" />
+              </div>
+  
+              <div class="form-row">
+                <label>Start Date</label>
+                <input formControlName="ValidityStartDate" type="date" />
+              </div>
+  
+              <div class="form-row">
+                <label>End Date</label>
+                <input formControlName="ValidityEndDate" type="date" />
+              </div>
+  
+              <div class="form-row">
+                <label>Is Required</label>
+                <input formControlName="isRequired" type="checkbox" />
+              </div>
+  
+              <div class="form-row">
+                <label>Is Single Value</label>
+                <input formControlName="isSingleValue" type="checkbox" />
+              </div>
+  
+              <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                  {{ isEditMode ? 'Update' : 'Save' }}
+                </button>
+                <button type="button" class="delete-btn" (click)="initNewCharacteristic()">Cancel</button>
+              </div>
+  
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

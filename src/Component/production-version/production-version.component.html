@@ -1,0 +1,164 @@
+<div class="production-version-container">
+  <!-- Liste des Production Versions -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📝 Production Version List</h2></summary>
+      <button (click)="initNewProductionVersion()" class="submit-btn">➕ New Production Version</button>
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Description</th>
+            <!--<th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Material</th>-->
+            <th>Routing</th>
+            <th>Bom</th>
+            <!--<th>Actions</th>-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pv of productVersions"
+              (click)="edit(pv)"
+              [class.selected-row]="selectedProductVersion?.id === pv.id">
+            <td>{{ pv.versionCode }}</td>
+            <td>{{ pv.description }}</td>
+           <!-- <td>{{ pv.validityStartDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ pv.validityEndDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ pv.productionVersionStatus }}</td>
+            <td>{{ pv.material.materialNumber || '-' }}</td>-->
+           <!-- <td>
+              <button (click)="delete(pv.id); $event.stopPropagation()" class="delete-btn">❌ Delete</button>
+            </td>-->
+            <td>
+  <ul>
+    <li *ngIf="pv.routing">{{ pv.routing.routingNumber }}</li>
+  </ul>
+</td>
+<td>
+  <ul>
+    <li *ngIf="pv.bom">{{ pv.bom.bomNumber }}</li>
+  </ul>
+</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Formulaire -->
+  <div *ngIf="!isEditMode || selectedProductVersion" class="tabs">
+    <div class="tab-titles">
+      <div class="tab-title" [class.active]="activeTab === 0" (click)="activeTab = 0">
+        ✏️ Production Version Details
+      </div>
+      <div class="tab-title" [class.active]="activeTab === 1" (click)="activeTab = 1">
+        ⚙️ BOM & Routing Associations
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Onglet Détails -->
+      <div *ngIf="activeTab === 0" class="tab-panel">
+        <form [formGroup]="form" (ngSubmit)="submit()" class="material-form">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Version Number</label>
+              <input formControlName="versionCode" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Description</label>
+              <input formControlName="description" type="text" />
+            </div>
+
+          <!--  <div class="form-row">
+              <label>Start Date</label>
+              <input formControlName="validityStartDate" type="date" />
+            </div>
+
+            <div class="form-row">
+              <label>End Date</label>
+              <input formControlName="validityEndDate" type="date" />
+            </div>
+
+            <div class="form-row">
+              <label>Status</label>
+              <select formControlName="productionVersionStatus">
+                <option *ngFor="let status of productionVersionStatuses" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Material Number</label>
+              <input formControlName="materialNumber" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Material Description</label>
+              <input formControlName="materialDescription" type="text" />
+            </div>-->
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn" [disabled]="form.invalid">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+              <button type="button" class="delete-btn" (click)="initNewProductionVersion()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Onglet Associations -->
+      <div *ngIf="activeTab === 1 && selectedProductVersion" class="tab-panel">
+        <h3>Manage Associations</h3>
+        
+        <div class="association-section">
+          <h4>BOM Association</h4>
+          <div class="association-controls">
+  <select [(ngModel)]="selectedBomId" class="association-select">
+    <option [value]="null">Select a BOM</option>
+    <option *ngFor="let bom of boms" [value]="bom.id">{{ bom.bomNumber }}</option>
+  </select>
+  <button (click)="associateBOM(selectedProductVersion!.id!, selectedBomId!)" 
+          class="association-btn"
+          [disabled]="!selectedBomId">
+    Associate BOM
+  </button>
+  <button (click)="removeBOM(selectedProductVersion!.id!)" 
+          class="association-btn danger"
+          [disabled]="!selectedProductVersion.bom">
+    Remove BOM
+  </button>
+</div>
+        </div>
+
+        <div class="association-section">
+          <h4>Routing Association</h4>
+          <div class="association-controls">
+  <select [(ngModel)]="selectedRoutingId" class="association-select">
+    <option [value]="null">Select a Routing</option>
+    <option *ngFor="let routing of routings" [value]="routing.id">{{ routing.routingNumber }}</option>
+  </select>
+  <button (click)="associateRouting(selectedProductVersion!.id!, selectedRoutingId!)" 
+          class="association-btn"
+          [disabled]="!selectedRoutingId">
+    Associate Routing
+  </button>
+  <button (click)="removeRouting(selectedProductVersion!.id!)" 
+          class="association-btn danger"
+          [disabled]="!selectedProductVersion.routing">
+    Remove Routing
+  </button>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

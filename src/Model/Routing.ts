@@ -1,7 +1,9 @@
 import { ProductionVersionStatus } from "./ProductionVersionStatus";
 import { ProductVersion } from "./ProductVersion";
+import { WorkCenter } from "./WorkCenter";
 
 export interface Routing {
+    id : number;
     routingNumber: string;
     materialNumber: string;
     routingStatus: ProductionVersionStatus;
@@ -9,9 +11,10 @@ export interface Routing {
     validityEndDate: Date;
     baseQuantity: number;
     unitOfMeasure: string;
-    routingDescription: string;
+    description: string;
     
-   
+    workCenters?: WorkCenter[];
+    workCenterIds?: number[];
     productVersion: ProductVersion;
   }
   

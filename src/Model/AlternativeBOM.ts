@@ -1,4 +1,4 @@
-import { BOM } from "./Bom";
+import { Bom } from "./Bom";
 
 
 export interface AlternativeBOM {
@@ -9,5 +9,5 @@ export interface AlternativeBOM {
   validityStartDate: Date;
   validityEndDate: Date;
 
-  bom: BOM;
+  bom: Bom;
 }

@@ -1,35 +1,35 @@
 import { Classification } from "./Classification";
-import { MaterialType } from "./MaterialType";
+import { MaterialType } from './MaterialType';
 
 export interface Material {
-    materialNumber: string;
-    materialType: MaterialType;
-    description : string;
-    baseUnitOfMeasure: string;
-    materialGroup: string;
-    division: string;
-    batchManagement: boolean;
-    serialNumberManagement : Boolean;
-    taxClassification : string;
-    industrySector : string ;
-    oldMaterialNumber : string;
-    materialHierarchy : string;
-    materialStatus : string;
-    procurementType: string;
-    MRPType:string;
-    MRPController : string;
-    lotSize :string;
-    purchasingGroup : string;
-    purchasingValueKey : string ;
-    accountAssignmentGroup : string;
-    valuationClass: string;
-    standardPrice: number;
-    movingAveragePrice : number;
-    taxData : string;
-    classificationData: string;
+  id?: number;
+  materialNumber: string;
+  materialType: MaterialType;
+  description: string;
+  baseUnitOfMeasure: string;
+  materialGroup: string;
+  division: string;
+  batchManagement: boolean;
+  serialNumberManagement: boolean;
+  taxClassification: string;
+  industrySector: string;
+  oldMaterialNumber: string;
+  materialHierarchy: string;
+  materialStatus: string;
+  procurementType: string;
+  mrpType: string;
+  mrpController: string;
+  lotSize: string;
+  purchasingGroup: string;
+  purchasingValueKey: string;
+  accountAssignmentGroup: string;
+  valuationClass: string;
+  standardPrice: number;
+  movingAveragePrice: number;
+  taxData: string;
+  classificationData: string;
+  classifications?: Classification[];
+}
 
-
-  //  classification: Classification;
-
-  }
-  
+export interface CreateMaterialDto extends Omit<Material, 'id' | 'classifications'> {}
+export interface MaterialDto extends Material {}

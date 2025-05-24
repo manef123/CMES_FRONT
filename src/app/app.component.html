@@ -1,50 +1,101 @@
 <div class="app-container">
   <nav class="sidebar">
-    <img src="assets/COFICAB_Powered-by-passion-300x84.png" class="company-logo">
-
+    <img src="assets/COFICAB_Powered-by-passion-300x84.png" class="company-logo" alt="COFICAB Logo">
+    
     <div class="logo">CMES App</div>
     <ul class="nav-links">
-      <li>
+      <li class="nav-item">
+      <a routerLink="/classification" routerLinkActive="active">
+        <i class="fas fa-layer-group"></i>
+        <span>Classification</span>
+      </a>
+      <ul class="sub-menu">
+        <li><a href="#">Submenu 1</a></li>
+        <li><a href="#">Submenu 2</a></li>
+      </ul>
+
+    </li>
+      <li class="nav-item">
+       
         <a routerLink="/alternativbom" routerLinkActive="active">
           <i class="fas fa-exchange-alt"></i>
           <span>Alternative BOM</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
+      <li class="nav-item">
+        <a routerLink="/characteristic" routerLinkActive="active">
+          <i class="fas fa-tags"></i>
+          <span>Characteristic</span>
+        </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
+      </li>
+      
+      <li class="nav-item">
         <a routerLink="/bom" routerLinkActive="active">
           <i class="fas fa-list-alt"></i>
           <span>BOM</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
-        <a routerLink="/material" routerLinkActive="active">
+      <li class="nav-item">
+        <a routerLink="/material/list" routerLinkActive="active">
           <i class="fas fa-cubes"></i>
           <span>Material</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
+      <li class="nav-item">
         <a routerLink="/product-order" routerLinkActive="active">
           <i class="fas fa-clipboard-list"></i>
           <span>Product Order</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
+      <li class="nav-item">
         <a routerLink="/product-version" routerLinkActive="active">
           <i class="fas fa-code-branch"></i>
           <span>Product Version</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
+      <li class="nav-item">
         <a routerLink="/routing" routerLinkActive="active">
           <i class="fas fa-route"></i>
           <span>Routing</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
-      <li>
+      <li class="nav-item">
         <a routerLink="/work-centre" routerLinkActive="active">
           <i class="fas fa-industry"></i>
           <span>Work Centre</span>
         </a>
+        <ul class="sub-menu">
+          <li><a href="#">Submenu 1</a></li>
+          <li><a href="#">Submenu 2</a></li>
+        </ul>
       </li>
     </ul>
   </nav>

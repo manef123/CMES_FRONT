@@ -1,19 +1,122 @@
-<h2>Work Centre List</h2>
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>Centre Code</th>
-        <th>Name</th>
-        <th>Capacity</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>WC001</td>
-        <td>Assembly Line A</td>
-        <td>250</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="workcenter-container">
+  <!-- Liste des Work Centers -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>🏭 Work Center List</h2></summary>
+      <button (click)="initNewWorkCenter()" class="submit-btn">➕ New Work Center</button>
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>Work Center Number</th>
+            <th>Description</th>
+            <th>Plant</th>
+            <th>Cost Center</th>
+            <th>Capacity</th>
+            <th>Capacity Unit</th>
+            <th>Work Center Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let workCenter of workCenters"
+              (click)="edit(workCenter)"
+              [class.selected-row]="selectedWorkCenter?.id === workCenter.id">
+            <td>{{ workCenter.workCenterNumber }}</td>
+            <td>{{ workCenter.description }}</td>
+            <td>{{ workCenter.plant }}</td>
+            <td>{{ workCenter.costCenter }}</td>
+            <td>{{ workCenter.capacity }}</td>
+            <td>{{ workCenter.capacityUnit }}</td>
+            <td>{{ workCenter.workCenterType }}</td>
+            <td>{{ workCenter.isActive ? 'Active' : 'Inactive' }}</td>
+            <td>
+              <button (click)="delete(workCenter.id)">❌ Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Formulaire -->
+  <div *ngIf="selectedWorkCenter || !isEditMode" class="tabs">
+    <div class="tab-titles">
+      <div class="tab-title" [class.active]="activeTab === 0" (click)="activeTab = 0">
+        ✏️ Work Center Details
+      </div>
+      <div class="tab-title" [class.active]="activeTab === 1" (click)="activeTab = 1">
+        🛠 Work Center Operations
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div *ngIf="activeTab === 0" class="tab-panel">
+        <!-- Formulaire Template-Driven -->
+        <form [formGroup]="form" (ngSubmit)="submit()" class="material-form">
+          <div class="form-grid">
+
+            <div class="form-row">
+              <label>Work Center Number</label>
+              <input formControlName="workCenterNumber" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Description</label>
+              <input formControlName="description" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Plant</label>
+              <input formControlName="plant" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Cost Center</label>
+              <input formControlName="costCenter" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Capacity</label>
+              <input formControlName="capacity" type="number" />
+            </div>
+
+            <div class="form-row">
+              <label>Capacity Unit</label>
+              <input formControlName="capacityUnit" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Work Center Type</label>
+              <select formControlName="workCenterType">
+                <option value="MACHINE">MACHINE</option>
+                <option value="LABOR">LABOR</option>
+                <option value="PRODUCTION_LINE">PRODUCTION_LINE</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Status</label>
+              <input formControlName="isActive" type="checkbox" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+              <button type="button" class="delete-btn" (click)="initNewWorkCenter()">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Onglet Operations -->
+      <div *ngIf="activeTab === 1" class="tab-panel">
+        <h3>Work Center Operations</h3>
+        <!-- Implémenter la gestion des opérations du Work Center ici -->
+      </div>
+    </div>
+  </div>
 </div>

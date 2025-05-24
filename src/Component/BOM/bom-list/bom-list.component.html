@@ -1,19 +1,110 @@
-<h2>BOM List</h2>
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>BOM Code</th>
-        <th>Description</th>
-        <th>Version</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>BOM001</td>
-        <td>Wire harness</td>
-        <td>1.0</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="bom-container">
+  <!-- Liste des BOM -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📦 BOM List</h2></summary>
+      <div class="add-btn-container">
+        <button class="add-btn" (click)="addNewBOM()">➕ Add New BOM</button>
+      </div>
+
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>BOM Number</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Material </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bom of boms"
+              (click)="editBOM(bom)"
+              [class.selected-row]="bom.bomNumber === selectedBOM.bomNumber">
+            <td>{{ bom.bomNumber }}</td>
+            <td>{{ bom.bomDescription }}</td>
+            <td>{{ bom.bomStatus }}</td>
+            <td>{{ bom.validityStartDate | date }}</td>
+            <td>{{ bom.validityEndDate | date }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let mat of bom.materials">{{ mat.materialNumber }}</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <!-- Séparateur -->
+  <div class="section-divider"></div>
+
+  <!-- Onglets statiques -->
+  <div class="tabs">
+    <div class="tab-titles">
+      <div *ngFor="let tab of tabs; let i = index"
+           class="tab-title"
+           [class.active]="selectedTab === i"
+           (click)="selectTab(i)">
+        {{ tab.title }}
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <!-- Formulaire BOM dans l'onglet principal -->
+    <form *ngIf="selectedTab === 0" (ngSubmit)="saveBOM()" class="material-form">
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="bomNumber">BOM Number</label>
+          <input type="text" [(ngModel)]="selectedBOM.bomNumber" name="bomNumber" id="bomNumber"  />
+        </div>
+        <div class="form-row">
+          <label for="bomDescription">BOM Description</label>
+          <input type="text" [(ngModel)]="selectedBOM.bomDescription" name="bomDescription" id="bomDescription"  />
+        </div>
+        <div class="form-row">
+          <label for="bomStatus">Status</label>
+          <select [(ngModel)]="selectedBOM.bomStatus" name="bomStatus" id="bomStatus" >
+            <option value="ACTIVE">Active</option>
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <label for="validityStartDate">Validity Start Date</label>
+          <input type="date" [(ngModel)]="selectedBOM.validityStartDate" name="validityStartDate" id="validityStartDate"  />
+        </div>
+        <div class="form-row">
+          <label for="validityEndDate">Validity End Date</label>
+          <input type="date" [(ngModel)]="selectedBOM.validityEndDate" name="validityEndDate" id="validityEndDate"  />
+        </div>
+         
+        <div class="form-row">
+          <label for="selectedMaterial">Choisir un matériau :</label>
+          <select id="selectedMaterial" [(ngModel)]="selectedBOM.principalMaterialId" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let material of materials" [value]="material.id">
+              {{ material.materialNumber }} 
+            </option>
+          </select>
+          
+        </div>
+        
+
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">
+            💾 {{ selectedBOM.bomNumber ? 'Update' : 'Save' }}
+          </button>
+          <button type="button" class="cancel-btn" (click)="cancelEdit()">❌ Cancel</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Afficher le message pour les autres onglets -->
+    <div *ngIf="selectedTab > 0">
+      <p>Contenu pour {{ tabs[selectedTab].title }}</p>
+    </div>
+  </div>
 </div>

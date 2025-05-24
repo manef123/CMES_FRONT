@@ -4,10 +4,11 @@ import { ClassType } from './ClassType';
 import { MultilangDescription } from './Multilang-description' ;
 
 export interface Classification {
+  id : number;
   classNumber: string;
   classType: ClassType;
   className: string;
-  classDescription: MultilangDescription;
+  classDescription: string;
   classStatus: ClassStatus;
   classGroup: string;
   classHierarchy: string;
@@ -17,10 +18,7 @@ export interface Classification {
   validityEndDate: Date;
   isInherited: boolean;
   classAuthorizationGroup: string;
-  materialNumber: string;
-  characteristicNumber: string;
-  characteristicValue: string;
-  enteredByUser: string;
-  entryDate: Date;
+  materialNumber: any[];
+ characteristics : Characteristic[];
 
 }
