@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Characteristic } from '../../Model/characteristic';
+import { Characteristic } from '../../Model/Characteristic';
 import { CharacteristicService } from '../../app/services/characteristic.service';
 import { DataType } from '../../Model/DataType';  // Import de l'énumération DataType
 import { CommonModule } from '@angular/common';

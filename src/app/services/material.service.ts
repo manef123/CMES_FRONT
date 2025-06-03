@@ -12,7 +12,7 @@ interface MaterialDtoWrapper {
   providedIn: 'root'
 })
 export class MaterialService {
-  private baseUrl = 'http://localhost:5117/api/Material';
+  private baseUrl = 'http://localhost:5118/api/Material';
 
   constructor(private http: HttpClient) { }
 
@@ -44,31 +44,41 @@ export class MaterialService {
     );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An error occurred';
-    if (error.error instanceof ErrorEvent) {
+  private handleError(error: unknown) {
+  let errorMessage = 'An error occurred';
+  
+  // Vérifier que l'erreur est bien un HttpErrorResponse
+  if (error instanceof HttpErrorResponse) {
+    // Vérifier que ErrorEvent est défini ET que error.error est une instance de ErrorEvent
+    if (typeof ErrorEvent !== 'undefined' && error.error instanceof ErrorEvent) {
+      // Erreur côté client ou réseau
       errorMessage = `Error: ${error.error.message}`;
     } else {
+      // Erreur côté serveur
       let details = '';
       if (error.error && typeof error.error === 'object') {
         if (error.error.errors) {
           details = JSON.stringify(error.error.errors);
         } else if (error.status === 400 && error.error.title === 'One or more validation errors occurred.') {
-           details = JSON.stringify(error.error.errors);
+          details = JSON.stringify(error.error.errors);
         } else {
-           // Tentative de capture spécifique des erreurs vues
-           if (error.error.dto || error.error['$.materialType']) {
-             details = JSON.stringify(error.error);
-           } else {
-             details = JSON.stringify(error.error); 
-           }
+          if (error.error.dto || error.error['$.materialType']) {
+            details = JSON.stringify(error.error);
+          } else {
+            details = JSON.stringify(error.error);
+          }
         }
       } else if (error.message) {
         details = error.message;
       }
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText || 'Http failure response'}${details ? '\nDetails: ' + details : ''}`;
     }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
+  } else if (error && typeof error === 'object' && 'message' in error) {
+    // Gestion des erreurs génériques avec un message
+    errorMessage = (error as any).message;
   }
+
+  console.error(errorMessage);
+  return throwError(() => new Error(errorMessage));
+}
 }

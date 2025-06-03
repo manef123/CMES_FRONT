@@ -24,6 +24,9 @@ import { ProductionVersionComponent } from '../Component/production-version/prod
 import { ProductOrderComponent } from '../Component/product-order/product-order.component';
 
 
+import { CharacteristicAssignmentComponent } from '../Component/characteristic-assignment/characteristic-assignment.component';
+import { EventComponent } from '../Component/event/event.component';
+
 export const AppRoutes: Routes = [
   // Redirections vers les pages de liste par défaut
   { path: 'material', redirectTo: 'material/list', pathMatch: 'full' },
@@ -65,6 +68,12 @@ export const AppRoutes: Routes = [
   
    //product-order
    { path: 'product-order', component: ProductOrderComponent },
+
+
+    { path: 'characteristic-assignment', component: CharacteristicAssignmentComponent },
+    
+    
+    { path: 'event', component: EventComponent },
 
   // Redirection par défaut
   { path: '', redirectTo: 'material/list', pathMatch: 'full' }

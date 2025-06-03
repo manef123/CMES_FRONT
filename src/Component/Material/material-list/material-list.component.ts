@@ -6,6 +6,8 @@ import { Material } from '../../../Model/Material';
 import { MaterialType } from '../../../Model/MaterialType';
 import { ClassificationService } from '../../../app/services/classification.service';
 import { Classification } from '../../../Model/Classification';
+import { ControlModel } from '../../../Model/ControlModel';
+import { ControlModelType } from '../../../Model/enums';
 
 @Component({
   selector: 'app-material-list',
@@ -57,38 +59,50 @@ export class MaterialListComponent implements OnInit {
     );
   }
 
-  initNewMaterial(): void {
-    this.selectedMaterial = {
-      materialNumber: '',
-      materialType: MaterialType.ROH,
-      description: '',
-      baseUnitOfMeasure: '',
-      materialGroup: '',
-      division: '',
-      batchManagement: false,
-      serialNumberManagement: false,
-      taxClassification: '',
-      industrySector: '',
-      oldMaterialNumber: '',
-      materialHierarchy: '',
-      materialStatus: '',
-      procurementType: '',
-      mrpType: '',
-      mrpController: '',
-      lotSize: '',
-      purchasingGroup: '',
-      purchasingValueKey: '',
-      accountAssignmentGroup: '',
-      valuationClass: '',
-      standardPrice: 0,
-      movingAveragePrice: 0,
-      taxData: '',
-      classificationData: '',
-      classifications: []
-    };
-    this.isEditMode = false;
-    this.activeTab = 0;
-  }
+    initNewMaterial(): void {
+  this.selectedMaterial = {
+    id: 0,
+    materialNumber: '',
+    materialType: MaterialType.ROH,
+    description: '',
+    baseUnitOfMeasure: '',
+    materialGroup: '',
+    division: '',
+    batchManagement: false,
+    serialNumberManagement: false,
+    taxClassification: '',
+    industrySector: '',
+    oldMaterialNumber: '',
+    materialHierarchy: '',
+    materialStatus: '',
+    procurementType: '',
+    mrpType: '',
+    mrpController: '',
+    lotSize: '',
+    purchasingGroup: '',
+    purchasingValueKey: '',
+    accountAssignmentGroup: '',
+    valuationClass: '',
+    standardPrice: 0,
+    movingAveragePrice: 0,
+    taxData: '',
+    classificationData: '',
+    classifications: [],
+    controlModels: [],
+    principalControlModelId: 0,
+    principalControlModel: {
+      id: 5, description: 'Control A',
+      modelType: ControlModelType.PAC,
+      isPrincipal: false,
+      materials: [],
+      characteristics: [],
+      events: []
+    },
+    characteristicAssignments: []
+  };
+  this.isEditMode = false;
+  this.activeTab = 0;
+}
 
   selectMaterial(material: Material): void {
     this.materialService.getById(material.id!).subscribe({

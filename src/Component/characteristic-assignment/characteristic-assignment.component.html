@@ -1,0 +1,117 @@
+<div class="assignment-container">
+  <!-- Assignments List Section -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📝 Assignments List</h2></summary>
+      <button (click)="initNewAssignment()" class="submit-btn">➕ New Assignment</button>
+      <table class="assignment-table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Characteristic</th>
+            <th>Default Value</th>
+            <th>Unit</th>
+            <th>Required</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let assignment of assignments"
+              (click)="editAssignment(assignment)"
+              [class.selected-row]="selectedAssignment?.id === assignment.id">
+            <td>{{ getMaterialName(assignment.materialId) }}</td>
+            <td>{{ getCharacteristicName(assignment.characteristicId) }}</td>
+            <td>{{ assignment.defaultValue || '-' }}</td>
+            <td>{{ assignment.unitOfMeasure || '-' }}</td>
+            <td>{{ assignment.isRequired ? 'Yes' : 'No' }}</td>
+            <td>
+              <button (click)="deleteAssignment(assignment.id); $event.stopPropagation()" 
+                      class="delete-btn">
+                ❌ Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Assignment Form -->
+  <div *ngIf="!isEditMode || selectedAssignment" class="form-section">
+    <h2>{{ isEditMode ? '✏️ Edit Assignment' : '➕ Create New Assignment' }}</h2>
+    
+    <form [formGroup]="assignmentForm" (ngSubmit)="submitForm()" class="assignment-form">
+      <div class="form-grid">
+        <!-- Material -->
+        <div class="form-row">
+          <label>Material</label>
+          <select formControlName="materialId" required>
+            <option value="">Select a material</option>
+            <option *ngFor="let material of materials" [value]="material.id">
+              {{ material.materialNumber }}
+            </option>
+          </select>
+          <div *ngIf="assignmentForm.get('materialId')?.invalid && 
+                      (assignmentForm.get('materialId')?.dirty || 
+                       assignmentForm.get('materialId')?.touched)"
+               class="error-message">
+            Material is required
+          </div>
+        </div>
+
+        <!-- Characteristic -->
+        <div class="form-row">
+          <label>Characteristic</label>
+          <select formControlName="characteristicId" required>
+            <option value="">Select a characteristic</option>
+            <option *ngFor="let characteristic of characteristics" [value]="characteristic.id">
+              {{ characteristic.characteristicName }}
+            </option>
+          </select>
+          <div *ngIf="assignmentForm.get('characteristicId')?.invalid && 
+                      (assignmentForm.get('characteristicId')?.dirty || 
+                       assignmentForm.get('characteristicId')?.touched)"
+               class="error-message">
+            Characteristic is required
+          </div>
+        </div>
+
+        <!-- Value Range -->
+        <div class="form-row">
+          <label>Value Range</label>
+          <input formControlName="valueRange" type="text" />
+        </div>
+
+        <!-- Default Value -->
+        <div class="form-row">
+          <label>Default Value</label>
+          <input formControlName="defaultValue" type="text" />
+        </div>
+
+        <!-- Unit of Measure -->
+        <div class="form-row">
+          <label>Unit of Measure</label>
+          <input formControlName="unitOfMeasure" type="text" />
+        </div>
+
+        <!-- Is Required -->
+        <div class="form-row checkbox-row">
+          <label>
+            <input formControlName="isRequired" type="checkbox" />
+            Is Required
+          </label>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" [disabled]="assignmentForm.invalid">
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+          <button type="button" class="cancel-btn" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

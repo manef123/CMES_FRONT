@@ -7,7 +7,7 @@ import { Classification } from '../../Model/Classification';
   providedIn: 'root'
 })
 export class ClassificationService {
-  private baseUrl = 'http://localhost:5117/api/Classification'; 
+  private baseUrl = 'http://localhost:5118/api/Classification'; 
 
   constructor(private http: HttpClient) {}
 

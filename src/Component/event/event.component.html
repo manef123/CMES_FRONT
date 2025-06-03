@@ -1,0 +1,80 @@
+<div class="event-container">
+  <!-- Liste des événements -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📅 Events List</h2></summary>
+      <button (click)="initNewEvent()" class="submit-btn">➕ New Event</button>
+
+      <table class="event-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Control Model</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events"
+              (click)="selectEvent(event)"
+              [class.selected-row]="selectedEvent?.id === event.id">
+            <td>{{ event.name }}</td>
+            <td>{{ event.eventType }}</td>
+            <td>{{ event.eventDate | date: 'shortDate' }}</td>
+            <td>{{ event.controlModelId }}</td>
+            <td>
+              <button (click)="deleteEvent(event.id); $event.stopPropagation()" class="delete-btn">❌ Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Formulaire événement -->
+  <div *ngIf="!isEditMode || selectedEvent" class="form-section">
+    <h2>{{ isEditMode ? '✏️ Edit Event' : '➕ Create New Event' }}</h2>
+
+    <form [formGroup]="eventForm" (ngSubmit)="submitEventForm()" class="event-form">
+      <div class="form-grid">
+        <!-- Name -->
+        <div class="form-row">
+          <label>Event Name</label>
+          <input formControlName="name" type="text" required />
+        </div>
+
+        <!-- Event Type -->
+        <div class="form-row">
+          <label>Event Type</label>
+          <select formControlName="eventType" required>
+            <option value="">Select type</option>
+            <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+        <!-- Date -->
+        <div class="form-row">
+          <label>Event Date</label>
+          <input formControlName="eventDate" type="date" required />
+        </div>
+
+        <!-- Control Model ID -->
+        <div class="form-row">
+          <label>Control Model ID</label>
+          <input formControlName="controlModelId" type="number" required />
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" >
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+          <button type="button" class="cancel-btn" (click)="cancelEventForm()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

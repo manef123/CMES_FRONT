@@ -1,4 +1,4 @@
-import { Characteristic } from './characteristic';
+import { Characteristic } from './Characteristic';
 import { ClassStatus } from './ClassStatus';
 import { ClassType } from './ClassType';
 import { MultilangDescription } from './Multilang-description' ;

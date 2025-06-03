@@ -1,4 +1,6 @@
+import { CharacteristicAssignment } from "./CharacteristicAssignment";
 import { Classification } from "./Classification";
+import { ControlModel } from "./ControlModel";
 import { MaterialType } from './MaterialType';
 
 export interface Material {
@@ -28,7 +30,13 @@ export interface Material {
   movingAveragePrice: number;
   taxData: string;
   classificationData: string;
-  classifications?: Classification[];
+  classifications: Classification[];
+   controlModels : ControlModel[];
+
+  principalControlModelId: number;
+  principalControlModel: ControlModel;
+
+  characteristicAssignments : CharacteristicAssignment[];
 }
 
 export interface CreateMaterialDto extends Omit<Material, 'id' | 'classifications'> {}

@@ -7,7 +7,7 @@ import { Bom } from '../../Model/Bom';
   providedIn: 'root'
 })
 export class BOMService {
-  private apiUrl = 'http://localhost:5117/api/bom';  
+  private apiUrl = 'http://localhost:5118/api/bom';  
   
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

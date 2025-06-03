@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Characteristic } from '../../Model/characteristic';
+import { Characteristic } from '../../Model/Characteristic';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacteristicService {
-  private apiUrl = 'http://localhost:5117/api/Characteristics';
+  private apiUrl = 'http://localhost:5118/api/Characteristics';
 
   constructor(private http: HttpClient) {}
 

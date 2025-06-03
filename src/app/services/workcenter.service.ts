@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class WorkCenterService {
-  private baseUrl = 'http://localhost:5117/api/WorkCenter'; 
+  private baseUrl = 'http://localhost:5118/api/WorkCenter'; 
 
   constructor(private http: HttpClient) {}
 
