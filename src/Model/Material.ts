@@ -4,7 +4,7 @@ import { ControlModel } from "./ControlModel";
 import { MaterialType } from './MaterialType';
 
 export interface Material {
-  id?: number;
+  id: number;
   materialNumber: string;
   materialType: MaterialType;
   description: string;

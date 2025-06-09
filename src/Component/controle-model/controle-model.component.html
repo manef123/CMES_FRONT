@@ -1,0 +1,194 @@
+<div class="control-model-container">
+  <!-- Liste des Control Models -->
+  <div class="list-section">
+    <details open>
+      <summary><h2>📝 Control Model List</h2></summary>
+      <button (click)="initNewControlModel()" class="submit-btn">➕ New Control Model</button>
+      <table class="material-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Principal</th>
+            <th>Characteristics</th>
+            <th>Materials</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let model of controlModels"
+              (click)="selectControlModel(model.id)"
+              [class.selected-row]="selectedControlModel?.id === model.id">
+            <td>{{ model.description }}</td>
+            <td>{{ model.name }}</td>
+            <td>{{ model.modelType }}</td>
+            <td>{{ model.isPrincipal ? 'Yes' : 'No' }}</td>
+            <td>{{ model.characteristics.length || 0 }}</td>
+            <td>{{ model.materials.length || 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Formulaire et Détails -->
+  <div *ngIf="selectedControlModel || !isEditMode" class="tabs">
+    <div class="tab-titles">
+      <div class="tab-title" [class.active]="activeTab === 0" (click)="activeTab = 0">
+        ✏️ {{ isEditMode ? 'Edit' : 'Create' }} Control Model
+      </div>
+      <div *ngIf="selectedControlModel" class="tab-title" [class.active]="activeTab === 1" (click)="activeTab = 1">
+        🔗 Relations
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Onglet Détails/Formulaire -->
+      <div *ngIf="activeTab === 0" class="tab-panel">
+        <form [formGroup]="controlModelForm" (ngSubmit)="isEditMode ? updateControlModel() : createControlModel()" class="material-form">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Model Type</label>
+              <select formControlName="modelType">
+                <option *ngFor="let type of controlModelTypes" [value]="type.value">
+                  {{ type.label }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Description</label>
+              <input formControlName="description" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label>Name</label>
+              <input formControlName="name" type="text" />
+            </div>
+
+            <div class="form-row checkbox-row">
+              <label>
+                <input type="checkbox" formControlName="isPrincipal" />
+                Is Principal Model
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn" [disabled]="controlModelForm.invalid">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+              <button type="button" class="delete-btn" (click)="cancelEdit()">Cancel</button>
+              <button *ngIf="isEditMode && selectedControlModel" 
+                      type="button" 
+                      class="delete-btn" 
+                      (click)="deleteControlModel(selectedControlModel.id)">
+                Delete
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Onglet Relations (fusion des caractéristiques et matériaux) -->
+      <div *ngIf="activeTab === 1 && selectedControlModel" class="tab-panel">
+        <div class="association-section">
+          <h3>Manage Characteristics</h3>
+
+          <div class="association-controls">
+            <select [(ngModel)]="selectedCharacteristicId" class="association-select">
+              <option [value]="null">Select a Characteristic</option>
+              <option *ngFor="let char of availableCharacteristics" [value]="char.id">
+                {{ char.characteristicNumber }} - {{ char.characteristicName }}
+              </option>
+            </select>
+            <button (click)="addCharacteristic()" 
+                    class="association-btn"
+                    [disabled]="!selectedCharacteristicId">
+              Add Characteristic
+            </button>
+          </div>
+
+          <table class="association-table" *ngIf="selectedControlModel.characteristics?.length">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let char of selectedControlModel.characteristics">
+                <td>{{ char.characteristicNumber }}</td>
+                <td>{{ char.characteristicName }}</td>
+                <td>{{ char.characteristicDescription }}</td>
+                <td>
+                  <button (click)="removeCharacteristic(selectedControlModel.id, char.id)" 
+                          class="association-btn danger">
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="section-divider" />
+
+        <div class="association-section">
+          <h3>Manage Materials</h3>
+
+          <div class="association-controls">
+            <select [(ngModel)]="selectedMaterialId" class="association-select">
+              <option [value]="null">Select a Material</option>
+              <option *ngFor="let mat of availableMaterials" [value]="mat.id">
+                {{ mat.materialNumber }} - {{ mat.description }}
+              </option>
+            </select>
+            <button (click)="addMaterial()" 
+                    class="association-btn"
+                    [disabled]="!selectedMaterialId">
+              Add Material
+            </button>
+          </div>
+
+          <div class="filter-section">
+            <h4>Filter Materials by Characteristic</h4>
+            <select [(ngModel)]="filterCharacteristicId" (change)="loadMaterialsByCharacteristic(filterCharacteristicId)" class="association-select">
+              <option [value]="null">Select a Characteristic to filter</option>
+              <option *ngFor="let char of availableCharacteristics" [value]="char.id">
+                {{ char.characteristicNumber }} - {{ char.characteristicName }}
+              </option>
+            </select>
+          </div>
+
+          <table class="association-table" *ngIf="selectedControlModel.materials?.length">
+            <thead>
+              <tr>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mat of selectedControlModel.materials">
+                <td>{{ mat.materialNumber }}</td>
+                <td>{{ mat.description }}</td>
+                <td>{{ mat.materialType }}</td>
+                <td>
+                  <button (click)="removeMaterial(selectedControlModel.id, mat.id)" 
+                          class="association-btn danger">
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

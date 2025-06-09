@@ -26,6 +26,7 @@ import { ProductOrderComponent } from '../Component/product-order/product-order.
 
 import { CharacteristicAssignmentComponent } from '../Component/characteristic-assignment/characteristic-assignment.component';
 import { EventComponent } from '../Component/event/event.component';
+import { ControleModelComponent } from '../Component/controle-model/controle-model.component';
 
 export const AppRoutes: Routes = [
   // Redirections vers les pages de liste par défaut
@@ -37,7 +38,7 @@ export const AppRoutes: Routes = [
   { path: 'classification', redirectTo: 'classification', pathMatch: 'full' },
   { path: 'product-version', redirectTo: 'product-version', pathMatch: 'full' },
    { path: 'product-order', redirectTo: 'product-order', pathMatch: 'full' },
-
+   
   // Material
   { path: 'material/list', component: MaterialListComponent },
   { path: 'material/form', component: MaterialFormComponent },
@@ -72,7 +73,7 @@ export const AppRoutes: Routes = [
 
     { path: 'characteristic-assignment', component: CharacteristicAssignmentComponent },
     
-    
+    { path: 'controle-model', component: ControleModelComponent },
     { path: 'event', component: EventComponent },
 
   // Redirection par défaut

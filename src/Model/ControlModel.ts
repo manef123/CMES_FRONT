@@ -5,6 +5,7 @@ import { Event } from './Event';
 
 export class ControlModel {
   id!: number;
+  name!:string;
   modelType!: ControlModelType;
   description!: string;
   isPrincipal!: boolean;

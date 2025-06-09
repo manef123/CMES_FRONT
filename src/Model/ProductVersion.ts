@@ -14,8 +14,8 @@ export interface ProductVersion {
   description: string;
 
   //material: Material;
-  bom: Bom;
-  routing: Routing;
+  bom: Bom | null;
+  routing: Routing | null ;
 }
 
   

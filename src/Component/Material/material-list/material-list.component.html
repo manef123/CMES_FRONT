@@ -11,13 +11,12 @@
             <th>Description</th>
             <th>Type</th>
             <th>Base UoM</th>
-            
             <th>Price</th>
-            <th> classification</th>
+            <th>Classifications</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let material of materials" 
+          <tr *ngFor="let material of materials"
               (click)="selectMaterial(material)"
               [class.selected-row]="selectedMaterial?.id === material.id">
             <td>{{ material.materialNumber }}</td>
@@ -27,7 +26,7 @@
             <td>{{ material.standardPrice | currency }}</td>
             <td>
               <ul>
-                <li *ngFor="let mat of material.classifications">{{ mat.classNumber }}</li>
+                <li *ngFor="let mat of material.classifications">{{ mat.className }}</li>
               </ul>
             </td>
           </tr>
@@ -38,7 +37,7 @@
 
   <div class="section-divider"></div>
 
-  <!-- Formulaire -->
+  <!-- Formulaire avec onglets -->
   <div *ngIf="selectedMaterial" class="tabs">
     <div class="tab-titles">
       <div class="tab-title" [class.active]="activeTab === 0" (click)="activeTab = 0">
@@ -50,82 +49,67 @@
     </div>
 
     <div class="tab-content">
+      <!-- Onglet 1 : Détails du matériau -->
       <div *ngIf="activeTab === 0" class="tab-panel">
-        <!-- Formulaire Template-Driven -->
         <form (ngSubmit)="saveMaterial()" class="material-form">
           <div class="form-grid">
-
-            <!-- Section 1: Basic Information -->
             <div class="form-row">
               <label>Material Number*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.materialNumber" name="materialNumber"  [readonly]="isEditMode">
+              <input type="text" [(ngModel)]="selectedMaterial.materialNumber" name="materialNumber" [readonly]="isEditMode">
             </div>
 
             <div class="form-row">
               <label>Description*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.description" name="description" >
+              <input type="text" [(ngModel)]="selectedMaterial.description" name="description">
             </div>
 
             <div class="form-row">
               <label>Material Type*</label>
-              <select [(ngModel)]="selectedMaterial.materialType" name="materialType" >
+              <select [(ngModel)]="selectedMaterial.materialType" name="materialType">
                 <option *ngFor="let option of materialTypeOptions" [value]="option.value">
                   {{ option.label }}
                 </option>
               </select>
             </div>
-            
+
             <div class="form-row">
               <label>Base Unit of Measure*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.baseUnitOfMeasure" name="baseUnitOfMeasure" >
+              <input type="text" [(ngModel)]="selectedMaterial.baseUnitOfMeasure" name="baseUnitOfMeasure">
             </div>
 
             <div class="form-row">
               <label>Material Group*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.materialGroup" name="materialGroup" >
+              <input type="text" [(ngModel)]="selectedMaterial.materialGroup" name="materialGroup">
             </div>
 
-            <!-- Champs manquants ajoutés -->
             <div class="form-row">
               <label>Old Material Number*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.oldMaterialNumber" name="oldMaterialNumber" >
+              <input type="text" [(ngModel)]="selectedMaterial.oldMaterialNumber" name="oldMaterialNumber">
             </div>
 
             <div class="form-row">
               <label>Material Hierarchy*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.materialHierarchy" name="materialHierarchy" >
+              <input type="text" [(ngModel)]="selectedMaterial.materialHierarchy" name="materialHierarchy">
             </div>
 
             <div class="form-row">
               <label>Lot Size*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.lotSize" name="lotSize" >
+              <input type="text" [(ngModel)]="selectedMaterial.lotSize" name="lotSize">
             </div>
 
             <div class="form-row">
               <label>Account Assignment Group*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.accountAssignmentGroup" name="accountAssignmentGroup" >
+              <input type="text" [(ngModel)]="selectedMaterial.accountAssignmentGroup" name="accountAssignmentGroup">
             </div>
 
             <div class="form-row">
               <label>Valuation Class*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.valuationClass" name="valuationClass" >
+              <input type="text" [(ngModel)]="selectedMaterial.valuationClass" name="valuationClass">
             </div>
 
-            <div class="form-row">
-              <label for="selectedClassification">Classification Data :</label>
-              <select id="selectedClassification" [(ngModel)]="selectedMaterial.classifications" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let classification of classifications" [value]="classification.id">
-                  {{ classification.classNumber }} 
-                </option>
-              </select>
-              
-            </div>
-            <!-- Fin des champs manquants ajoutés -->
-
-            <!-- Section 2: Management Flags -->
             <div class="form-row">
               <label>Batch Management*</label>
-              <select [(ngModel)]="selectedMaterial.batchManagement" name="batchManagement" >
+              <select [(ngModel)]="selectedMaterial.batchManagement" name="batchManagement">
                 <option [ngValue]="true">Yes</option>
                 <option [ngValue]="false">No</option>
               </select>
@@ -133,78 +117,73 @@
 
             <div class="form-row">
               <label>Serial Number Management*</label>
-              <select [(ngModel)]="selectedMaterial.serialNumberManagement" name="serialNumberManagement" >
+              <select [(ngModel)]="selectedMaterial.serialNumberManagement" name="serialNumberManagement">
                 <option [ngValue]="true">Yes</option>
                 <option [ngValue]="false">No</option>
               </select>
             </div>
 
-            <!-- Section 3: Organizational Data -->
             <div class="form-row">
               <label>Division*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.division" name="division" >
+              <input type="text" [(ngModel)]="selectedMaterial.division" name="division">
             </div>
 
             <div class="form-row">
               <label>Industry Sector*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.industrySector" name="industrySector" >
+              <input type="text" [(ngModel)]="selectedMaterial.industrySector" name="industrySector">
             </div>
 
             <div class="form-row">
               <label>Material Status*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.materialStatus" name="materialStatus" >
+              <input type="text" [(ngModel)]="selectedMaterial.materialStatus" name="materialStatus">
             </div>
 
-            <!-- Section 4: Procurement Data -->
             <div class="form-row">
               <label>Procurement Type*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.procurementType" name="procurementType" >
+              <input type="text" [(ngModel)]="selectedMaterial.procurementType" name="procurementType">
             </div>
 
             <div class="form-row">
               <label>MRP Type*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.mrpType" name="mrpType" >
+              <input type="text" [(ngModel)]="selectedMaterial.mrpType" name="mrpType">
             </div>
 
             <div class="form-row">
               <label>MRP Controller*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.mrpController" name="mrpController" >
+              <input type="text" [(ngModel)]="selectedMaterial.mrpController" name="mrpController">
             </div>
 
-            <!-- Section 5: Purchasing Data -->
             <div class="form-row">
               <label>Purchasing Group*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.purchasingGroup" name="purchasingGroup" >
+              <input type="text" [(ngModel)]="selectedMaterial.purchasingGroup" name="purchasingGroup">
             </div>
 
             <div class="form-row">
               <label>Purchasing Value Key*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.purchasingValueKey" name="purchasingValueKey" >
+              <input type="text" [(ngModel)]="selectedMaterial.purchasingValueKey" name="purchasingValueKey">
             </div>
 
-            <!-- Section 6: Financial Data -->
             <div class="form-row">
               <label>Standard Price (TND)*</label>
-              <input type="number" [(ngModel)]="selectedMaterial.standardPrice" name="standardPrice" step="0.01" >
+              <input type="number" [(ngModel)]="selectedMaterial.standardPrice" name="standardPrice" step="0.01">
             </div>
 
             <div class="form-row">
               <label>Moving Avg. Price (TND)*</label>
-              <input type="number" [(ngModel)]="selectedMaterial.movingAveragePrice" name="movingAveragePrice" step="0.01" >
+              <input type="number" [(ngModel)]="selectedMaterial.movingAveragePrice" name="movingAveragePrice" step="0.01">
             </div>
 
-            <!-- Section 7: Additional Data -->
             <div class="form-row">
               <label>Tax Classification*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.taxClassification" name="taxClassification" >
+              <input type="text" [(ngModel)]="selectedMaterial.taxClassification" name="taxClassification">
             </div>
 
             <div class="form-row">
               <label>Tax Data*</label>
-              <input type="text" [(ngModel)]="selectedMaterial.taxData" name="taxData" >
+              <input type="text" [(ngModel)]="selectedMaterial.taxData" name="taxData">
             </div>
 
-            <!-- Buttons -->
+            <!-- Boutons -->
             <div class="form-actions">
               <button type="submit" class="submit-btn">
                 {{ isEditMode ? 'Update' : 'Save' }}
@@ -213,16 +192,38 @@
                 Cancel
               </button>
             </div>
-
           </div>
         </form>
       </div>
 
-      <!-- Onglet Classifications -->
+      <!-- Onglet 2 : Classifications -->
       <div *ngIf="activeTab === 1" class="tab-panel">
-        <h3>Material Classifications</h3>
-        <!-- Implémenter la gestion des classifications -->
-      </div>
-    </div>
+  <h3>Material Classifications</h3>
+
+  <div class="form-row">
+    <label for="classificationSelect">Add Classification:</label>
+    <select id="classificationSelect" [(ngModel)]="selectedClassificationId">
+      <option [ngValue]="null" disabled selected>Select classification</option>
+      <option *ngFor="let c of classifications" [value]="c.id">{{ c.className }} </option>
+    </select>
+    <button class="submit-btn" (click)="addClassificationToMaterial()" [disabled]="!selectedClassificationId">➕ Add</button>
+  </div>
+
+  <div class="classification-list" *ngIf="selectedMaterial?.classifications?.length; else noClassifications">
+  <p class="classification-header">Classification ajoutée a cette  Material :</p>
+  <ul>
+    <li *ngFor="let classification of selectedMaterial.classifications" class="classification-item">
+      {{ classification.className }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #noClassifications>
+  <p class="no-classifications">No classifications assigned.</p>
+</ng-template>
+
+</div>
+
+    </div> 
   </div>
 </div>
